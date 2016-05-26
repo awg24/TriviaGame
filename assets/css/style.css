@@ -6,16 +6,24 @@
 
 
 
+.videoClip{
+	height:50%;
 
+}
 
+.top{
+	height:200px;
 
+}
 
+.startButton{
+	float:right;
+}
 
-
-
-
-
-
+input[type="radio"] {
+  margin-right: 10px;
+  
+}
 
 
 

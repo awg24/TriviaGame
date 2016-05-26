@@ -27,43 +27,55 @@
 
 <body>
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-        <div class="container">
-            <h1>???? Trivia</h1>
-            <p>This is trivia from year ??? All questions are timed. Press start to continue</p>
+    <div class="top" ">
+        <div class="container ">
+            <h1>Movie - Music Video Trivia</h1>
+            <p>This is trivia from any year and any country. All questions are timed. Press start to continue</p>
+            <div>
+               
+            </div>
         </div>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Start&raquo;</a></p>
+        <div class="col-md-10 "></div>
+        <div class="col-md-2 ">
+          <p class="startButton"><a class="btn btn-primary btn-lg " href="# " role="button ">Start&raquo;</a></p>
+
+        </div>
     </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <h2>Question section</h2>
-                <p>Here will be either text, audio or video.</p>
-                <div id="player">
-                    <iframe id="ytplayer" type="text/html" width="300" height="168.75" src="https://www.youtube.com/embed/uVLSe2uhLXo?autoplay=1&controls=0&enablejsapi=1&fs=0&rel=0&showinfo=0&iv_load_policy=3" frameborder="0" allowfullscreen>
+    <div class="container ">
+        <div class="row  ">
+            <div id="player" class="col-md-6 videoClip">
+            <div ></div>
+
                 </div>
-                <p><a class="btn btn-default" href="#" role="button">Questions &raquo;</a></p>
-            </div>
-            <div class="col-md-4">
-                <h2>Answer section</h2>
-                <p>Add form here with radio buttons </p>
-                <p><a class="btn btn-default" href="#" role="button">Radio buttons here &raquo;</a></p>
-            </div>
-            <div class="col-md-4">
-                <h2>Comm section</h2>
+                    <div class="col-md-4 questions ">
+                        <h4 class="question ">Question section</h4>
+                          <ol><!-- answer selections will be added here  -->
+
+                          </ol>
+                     </div><!-- quesions -->
+                    <div class="col-md-2 ">
+                       <h3>Summary</h3>
+                
                 <p>Here will be a running total of right, wrong and comments on answers including correct answer</p>
-                <p><a class="btn btn-default" href="#" role="button">Quit and restart &raquo;</a></p>
-            </div>
+                    </div>
+            </div><!-- videoClip -->
+            <hr>
+            <footer>
+                <p>&copy; Jack Walker 2016</p>
+            </footer>
         </div>
-        <hr>
-        <footer>
-            <p>&copy; Jack Walker 2016</p>
-        </footer>
-    </div>
 </body>
 <script>
+
+
+
+function check(browser) {
+    document.getElementById("answer ").value=browser;
 }
+
+
+
 </script>
+
 
 </html>
