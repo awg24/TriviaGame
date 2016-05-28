@@ -3,68 +3,151 @@ $(document).ready(function() {
     // -------------------------------------------------
     //        Global variables
     // -------------------------------------------------
-
-
+    var questionNumber = 0;
+    var roundComplete = false;
+    var myAnswer;
+    var numCorrect = 0;
+    var numWrong = 0;
+    var correctAnswer1;
+    var timout;
     var triviaArray = [{
+
             name: "Zootopia",
-            video: " <iframe id='ytplayer ' type='text/html ' width='100% ' height='300px ' src=https://www.youtube.com/embed/uVLSe2uhLXo?autoplay=1&controls=0&enablejsapi=1&fs=0&rel=0&showinfo=0&iv_load_policy=3  ></iframe>",
-            questionLine: "This video is from the Japan release of what movie?",
+            video: "Dream Ami.mp4",
+            questionLine: "Dream Ami was selected to sing the theme in the Japan release of what movie?",
             correctAnswer: "Zootopia",
             wrongAnswer: ["Outlander", "Animal Mania", "Madagascar"]
+        }, {
+            name: "Alien4",
+            video: " <iframe id='ytplayer ' type='text/html ' width='100% ' height='300px ' src=https://www.youtube.com/embed/UsJjfS-i2zM?autoplay=1&controls=0&enablejsapi=1&fs=0&rel=0&showinfo=0&iv_load_policy=3  ></iframe>",
+            questionLine: "Sigourney Weaver stared in this 1979 classic?",
+            correctAnswer: "Alien Resurection",
+            wrongAnswer: ["Predator", "The Thing", "Dark Skys"]
+        }, {
+            name: "Yamamoto",
+            video: "Uchuu Senkan Yamato Opening.mp4",
+            questionLine: "The first episode of this anime was October 6, 1974",
+            correctAnswer: "Space ship Yamamoto",
+            wrongAnswer: ["Striker - Space Fighter", "Dreadnought", "Gundam Wing"]
+        }, {
+            name: "Alien3",
+            video: "Dream Ami was selected to sing the theme in the Japan release of what movie?",
+            questionLine: "Sigourney Weaver stared in this 1979 classic?",
+            correctAnswer: "Alien Resurection",
+            wrongAnswer: ["Predator", "The Thing", "Dark Skys"]
         }
 
     ];
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////
 
-    loadData();
+    // everything in start button - on clilck change to restart
+    // no video
+    // no timer at at first
 
 
-    function loadData() {
-        $("#player").append(triviaArray[0].video);
-        $(".question").text(triviaArray[0].questionLine);
-     //   $("#answer1").text(triviaArray[0].correctAnswer);
 
-// change this to append to <ol>
-        $("ol").append("<li id ='answer1'>" + triviaArray[0].correctAnswer + "</li");
-        $("ol").append("<li id ='answer2'>" + triviaArray[0].wrongAnswer[0] + "</li");
-        $("ol").append("<li id ='answer3'>" + triviaArray[0].wrongAnswer[1] + "</li");
-        $("ol").append("<li id ='answer4'>" + triviaArray[0].wrongAnswer[2] + "</li");
-     //   $("#answer2").text(triviaArray[0].wrongAnswer[0]);
-     //   $("#answer3").text(triviaArray[0].wrongAnswer[1]);
-     //   $("#answer4").text(triviaArray[0].wrongAnswer[2]);
+    // setup question array and randomize the order for questions
+    var questonOrderArray = [];
+    for (i = 0; i < triviaArray.length; i += 1) {
+        questonOrderArray[i] = i;
+    }
+    shuffle(questonOrderArray);
+
+
+    $(".startButton").on("click", function() {
+
+        // this starts the game
+        numCorrect = 0;
+        numWrong = 0;
+
+        shuffle(questonOrderArray);
+        waitForAnswer();
+
+
+        function waitForAnswer() {
+            //  $(".questions").empty();
+            $("video").remove();
+            if (questionNumber > triviaArray.length) {
+                $('.header').text("Game over click start to continue");
+                while (true) {}
+            }
+            loadData(questonOrderArray[questionNumber]);
+            $('.header').text("");
+            questionNumber += 1;
+
+            timout = setTimeout(function() { checkAnswer("no answer"); }, 3000);
+            $(".ans").hover(function() {
+                $(this).css("background-color", "white");
+            }, function() {
+                $(this).css("background-color", "#33cc33");
+            });
+            $(".ans").hover(function(e) {});
+            $(".ans").click(function() {
+                myAnswer = $(this).attr("id");
+                console.log(myAnswer)
+                roundComplete = true;
+                checkAnswer(myAnswer);
+
+
+
+
+            });
+
+
+
+        }
+
+        function checkAnswer(userAnswer) {
+            clearTimeout(timout);
+            if (userAnswer == correctAnswer1) {
+                numCorrect += 1;
+
+                $('.header').text("Correct");
+                $(".correct").text("Correct: " + numCorrect); // update counter
+                $(".answers").empty(); // Clear the answers
+                $(".question").empty(); // cleat the question
+                //  loadVideo();// show video
+                setTimeout(function() { waitForAnswer(); }, 5000);
+            } else {
+                numWrong += 1;
+                $('.header').text("Sorry. The correct answer is " + correctAnswer1);
+                $(".wrong").text("Wrong: " + numWrong); // update counter
+                $(".answers").empty(); // Clear the answers
+                $(".question").empty(); // clear the question
+                //loadVideo();// show video
+                setTimeout(function() { waitForAnswer(); }, 5000);
+            }
+
+
+
+        }
+
+
+
+    }); // start button
+
+    function loadVideo() {
+        $(".questions").html("<video src='" + triviaArray[questonOrderArray[questionNumber]].video + "'  autoplay width='400 '</video>");
     }
 
 
+    function loadData(qNum) {
+        $(".question").empty();
+        // change this to append to <ol>
+        correctAnswer1 = triviaArray[qNum].correctAnswer;
+
+        $(".question").text(triviaArray[qNum].questionLine);
+
+        $(".answers").append("<p class= 'ans' id ='" + triviaArray[qNum].correctAnswer + "'>" + triviaArray[qNum].correctAnswer + "</p");
+        $(".answers").append("<p class= 'ans'  id ='" + triviaArray[qNum].wrongAnswer[0] + "'>" + triviaArray[qNum].wrongAnswer[0] + "</p");
+        $(".answers").append("<p class= 'ans'  id ='" + triviaArray[qNum].wrongAnswer[1] + "'>" + triviaArray[qNum].wrongAnswer[1] + "</p");
+        $(".answers").append("<p class= 'ans'  id ='" + triviaArray[qNum].wrongAnswer[2] + "'>" + triviaArray[qNum].wrongAnswer[2] + "</p");
 
 
-    // class of array?  or aray of classes
-    // question type (text, audio, video)
-    // correct answer
-    // pool of incorrect answers(min 3, prefer 5+)
 
+    }
 
-    // randomize array order ( create new array of questionArray.length)
-
-
-    //  enter loop for questions for(i = 0; i < questionArray.length; i++)  on game time out break
-    // alt is while loop
-
-    $("li").hover(function() {
-        $(this).css("background-color", "lightblue");
-    }, function() {
-        $(this).css("background-color", "white");
-    });
-
-
-    // check which answer is selected
-    $("input").on("click", function() {
-        $("#log").html($("input:checked").val() + " is checked!");
-    });
-
-    // test of array shuffle
-    var arr = [1, 2, 3, 4];
-    shuffle(arr);
-    console.log(arr);
 
 
     // shuffle question array
@@ -72,20 +155,6 @@ $(document).ready(function() {
         var currentIndex = array.length,
             temporaryValue, randomIndex;
 
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-
-            // And swap it with the current element.
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        }
-
-        return array;
     }
 
 
